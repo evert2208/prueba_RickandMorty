@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="row">
+        <h1>Buscar</h1>
+        <input type="text" #termino (keyup)="getBusqueda(termino.value)" class="form-control">
+    </div>
+    <div class="row image">
+
+        <div class="card">
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center" *ngIf="cargando">
+                    <strong>Cargando...</strong>
+                    <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                </div>
+                <table class="table" *ngIf="!cargando">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Genero</th>
+                            <th scope="col">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of storage">
+                            <th>{{item.nombre}}</th>
+                            <td>{{item.estado}}</td>
+                            <td>{{item.genero}}</td>
+                            <td>
+
+                                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editar(item)">Editar</button> &nbsp;
+                                <!-- <button type="button" class="btn btn-outline-danger" (click)="Eliminar(item.id)">Eliminar</button> -->
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row image">
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Genero</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let personaje of personajes">
+                            <th>
+                                <img [src]="personaje.image" [alt]="personaje.name" width="40">
+                            </th>
+                            <td>{{personaje.name}}</td>
+                            <td>{{personaje.status}}</td>
+                            <td>
+                                {{personaje.gender}}
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Personaje</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="formulario" (submit)="guardar()">
+                <div class="modal-body">
+                    <div class="form-floating">
+                        <input type="text" formControlName="nombre" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Nombre</label>
+                    </div>
+                    &nbsp;
+                    <div class="form-floating">
+                        <input type="text" formControlName="estado" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Estado</label>
+                    </div>
+                    &nbsp;
+                    <div class="form-floating">
+                        <input type="text" formControlName="genero" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Genero</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
